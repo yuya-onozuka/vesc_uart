@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node name="keyboard" pkg="keyboard" type="keyboard" output="screen" />
+    
+    <rosparam command="load" file="$(find vesc_uart)/params/motor_config.yaml"/>
+    <node pkg="vesc_uart" type="vesc_uart_node" name="vesc_uart_node" output="screen"/>
+
+    <node pkg="vesc_uart" type="calc_charged_capacity.py" name="calc_charged_capacity" output="screen"/>
+</launch>

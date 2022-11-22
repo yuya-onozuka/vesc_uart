@@ -1,0 +1,12 @@
+vesc:
+  motor:
+    enable_brake:   false
+    max_erpm:       100000
+    min_erpm:       0
+    max_amps:       50
+    min_amps:       0
+    max_duty:       0.95
+    min_duty:       0.05
+    brake_current:  18
+    scale_max:      1.0
+    scale_min:      -1.0
