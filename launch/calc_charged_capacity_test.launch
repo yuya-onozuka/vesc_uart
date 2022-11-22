@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="vesc_uart" type="calc_charged_capacity.py" name="calc_charged_capacity" output="screen"/>
+    <node pkg="vesc_uart" type="sine_wave_pub.py" name="sine_wave_pub" output="screen"/>
+</launch>

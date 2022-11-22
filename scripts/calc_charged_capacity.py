@@ -12,24 +12,25 @@ class CalcChargedCapacity:
 
         self.max_capacity = 6 #[Ah]
         self.freq_current_data = 10 #[Hz]
-        self.current_capacity = 0
+        self.current_capacity = 3 # set initial percentage
         self.scale_factor = 10000
 
         self.percentage = Int8()
-        self.percentage.data = self.current_capacity / self.max_capacity
 
     def callback(self, data):
         current = data.data
-        if current < 0:
-            charged_capacity = self.scale_factor*current/self.freq_current_data/3600 #[Ah]
-            self.current_capacity = self.current_capacity + charged_capacity
+        charged_capacity = self.scale_factor*current/self.freq_current_data/3600 #[Ah]
+        self.current_capacity = self.current_capacity + charged_capacity
         
-
-        self.percentage.data = int(abs(self.current_capacity / self.max_capacity))
-        rospy.loginfo("percentage = %f", abs(self.current_capacity / self.max_capacity))
+        percentage = self.current_capacity / self.max_capacity * 100
+        if percentage <= 0:
+            self.percentage.data = 0
+        elif percentage >= 100:
+            self.percentage.data = 100
+        else:
+            self.percentage.data = int(percentage)
+        rospy.loginfo("percentage = %f", self.percentage.data)
         self.pub.publish(self.percentage)
-
-
 
 if __name__ == '__main__':
     rospy.init_node("calc_charged_capacity")
